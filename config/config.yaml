@@ -1,0 +1,30 @@
+# Kafka Configuration
+kafka:
+  bootstrap_servers: "localhost:29092"
+  topic_name: "crime_events"
+  producer_rate: 1  # rows per second
+
+# Storm Configuration
+storm:
+  window_size_minutes: 5
+  slide_interval_minutes: 1
+  anomaly_threshold: 50  # crimes per district in window
+
+# Database Configuration
+databases:
+  postgres:
+    host: "localhost"
+    port: 5432
+    user: "crime_user"
+    password: "crime_pass"
+    dbname: "crime_analytics"
+  mongodb:
+    host: "localhost"
+    port: 27018
+    dbname: "crime_analytics"
+    collection: "alert_logs"
+
+# Spark Configuration
+spark:
+  app_name: "CrimeAnalyticsBatch"
+  master: "spark://spark-master:7077"

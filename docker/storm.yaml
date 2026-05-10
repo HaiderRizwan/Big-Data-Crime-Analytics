@@ -1,0 +1,6 @@
+storm.zookeeper.servers:
+    - "zookeeper"
+nimbus.seeds: ["storm-nimbus"]
+storm.local.dir: "/data"
+topology.spout.max.batch.size: 1000
+topology.message.timeout.secs: 30

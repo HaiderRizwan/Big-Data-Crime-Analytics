@@ -1,0 +1,66 @@
+name: "crime-analytics-topology"
+
+config:
+  topology.workers: 1
+  topology.debug: false
+
+components:
+  - id: "spoutConfigBuilder"
+    className: "org.apache.storm.kafka.spout.KafkaSpoutConfig"
+    factory: "builder"
+    factoryArgs:
+      - "kafka:9092"
+      - ["crime_events"]
+
+  - id: "kafkaSpoutConfig"
+    className: "org.apache.storm.kafka.spout.KafkaSpoutConfig"
+    constructorArgs:
+      - ref: "spoutConfigBuilder"
+
+spouts:
+  - id: "kafka-spout"
+    className: "org.apache.storm.kafka.spout.KafkaSpout"
+    constructorArgs:
+      - ref: "kafkaSpoutConfig"
+
+bolts:
+  - id: "parse-bolt"
+    className: "org.apache.storm.flux.wrappers.bolts.FluxShellBolt"
+    constructorArgs:
+      - ["python3", "storm/bolts/parse_bolt.py"]
+      - ["district", "raw_data"]
+    parallelism: 2
+
+  - id: "window-bolt"
+    className: "org.apache.storm.flux.wrappers.bolts.FluxShellBolt"
+    constructorArgs:
+      - ["python3", "storm/bolts/window_bolt.py"]
+      - ["district", "count", "threshold", "timestamp"]
+    parallelism: 2
+
+  - id: "alert-bolt"
+    className: "org.apache.storm.flux.wrappers.bolts.FluxShellBolt"
+    constructorArgs:
+      - ["python3", "storm/bolts/alert_bolt.py"]
+      - ["status"]
+    parallelism: 1
+
+streams:
+  - name: "kafka --> parse"
+    from: "kafka-spout"
+    to: "parse-bolt"
+    grouping:
+      type: SHUFFLE
+
+  - name: "parse --> window"
+    from: "parse-bolt"
+    to: "window-bolt"
+    grouping:
+      type: FIELDS
+      args: ["district"]
+
+  - name: "window --> alert"
+    from: "window-bolt"
+    to: "alert-bolt"
+    grouping:
+      type: SHUFFLE

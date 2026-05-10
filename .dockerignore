@@ -1,0 +1,15 @@
+# .dockerignore
+# Ignore large data files and local environment files to keep build context small
+data/
+*.csv
+*.zip
+*.tar
+*.gz
+.git/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+move_docker_data.ps1
+docker-desktop-data.tar

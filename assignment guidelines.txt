@@ -1,0 +1,17 @@
+Assignment Guidelines
+This is a group assignment, and each group must consist of exactly 2 members.
+The entire project (code, report, and any supporting material) must be submitted in a single zipped file.
+No other file formats will be accepted.
+Please follow the file naming convention strictly:
+"RollNumber1_RollNumber2_ProjectTitle.zip" (Example: i221234_i221567_CrimeAnalytics_A3.zip) Failure to follow this naming convention will result in a deduction of 5 marks.
+Ensure that your code is fully functional and error-free.
+Any portion of the code containing errors, even minor ones, will not be accepted.
+Include clear explanations of your implementation in the report.
+Every group member should understand and be able to explain the code.
+Start early to allow enough time for development, testing, and debugging.
+Group Formation Instructions
+Form groups of 2 members only.
+A Google Sheet link has been provided to register your group.
+Fill in all required details before the deadline:
+23/04/2026 – 11:59 PM
+After the deadline, the sheet will be locked, and no further entries will be allowed.
